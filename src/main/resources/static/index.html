@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>사용자(Member) 정보 관리</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>사용자(Member) 정보 관리</h1>
+
+    <!-- 사용자 정보 조회 폼 -->
+    <h2>사용자 정보 조회</h2>
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="searchName">이름으로 조회:</label>
+            <input type="text" id="searchName" name="searchName">
+        </div>
+        <button type="button" onclick="searchUser()">조회</button>
+    </form>
+
+    <div id="userDetails">
+        <!-- 조회된 사용자 정보가 여기에 표시됩니다. -->
+    </div>
+
+    <!-- 사용자 정보 등록 폼 -->
+    <h2>사용자 정보 등록</h2>
+    <form id="addForm">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name">
+        <label for="email">이메일:</label>
+        <input type="text" id="email" name="email">
+        <button type="button" onclick="addUser()">등록</button>
+    </form>
+
+    <!-- 사용자 정보 수정 폼 -->
+    <h2>사용자 정보 수정</h2>
+    <form id="updateForm">
+        <label for="updateName">수정할 사용자 이름:</label>
+        <input type="text" id="updateName" name="updateName">
+        <label for="newName">새로운 이름:</label>
+        <input type="text" id="newName" name="newName">
+        <label for="newEmail">새로운 이메일:</label>
+        <input type="text" id="newEmail" name="newEmail">
+        <button type="button" onclick="updateUser()">수정</button>
+    </form>
+
+    <!-- 사용자 정보 삭제 폼 -->
+    <h2>사용자 정보 삭제</h2>
+    <form id="deleteForm">
+        <label for="deleteName">삭제할 사용자 이름:</label>
+        <input type="text" id="deleteName" name="deleteName">
+        <button type="button" onclick="deleteUser()">삭제</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // JavaScript 함수들을 구현해야 합니다. 서버 백엔드와 통합해야 합니다.
+    function searchUser() {
+        // 조회 기능 구현
+    }
+
+    function addUser() {
+        // 등록 기능 구현
+    }
+
+    function updateUser() {
+        // 수정 기능 구현
+    }
+
+    function deleteUser() {
+        // 삭제 기능 구현
+    }
+</script>
+</body>
+</html>
