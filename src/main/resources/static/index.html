@@ -22,44 +22,53 @@
 </head>
 <body>
 <div class="container">
+    <br>
     <h1>사용자(Member) 정보 관리</h1>
-
+    <br><br>
     <!-- 사용자 정보 조회 폼 -->
     <h2>사용자 정보 조회</h2>
     <form id="searchForm">
-        <div class="form-group">
-            <label for="searchName">이름으로 조회:</label>
-            <input type="text" id="searchName" name="searchName">
-        </div>
+        <label for="searchId">ID로 조회:</label>
+        <input type="text" id="searchId" name="searchId">
         <button type="button" onclick="searchUser()">조회</button>
     </form>
 
     <div id="userDetails">
         <!-- 조회된 사용자 정보가 여기에 표시됩니다. -->
     </div>
-
+    <br>
     <!-- 사용자 정보 등록 폼 -->
     <h2>사용자 정보 등록</h2>
     <form id="addForm">
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name">
-        <label for="email">이메일:</label>
-        <input type="text" id="email" name="email">
+        <div class="form-group">
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="email">이메일:</label>
+            <input type="text" id="email" name="email">
+        </div>
         <button type="button" onclick="addUser()">등록</button>
     </form>
-
+    <br>
     <!-- 사용자 정보 수정 폼 -->
     <h2>사용자 정보 수정</h2>
     <form id="updateForm">
-        <label for="updateName">수정할 사용자 이름:</label>
-        <input type="text" id="updateName" name="updateName">
-        <label for="newName">새로운 이름:</label>
-        <input type="text" id="newName" name="newName">
-        <label for="newEmail">새로운 이메일:</label>
-        <input type="text" id="newEmail" name="newEmail">
+        <div class="form-group">
+            <label for="updateName">수정할 사용자 이름:</label>
+            <input type="text" id="updateName" name="updateName">
+        </div>
+        <div class="form-group">
+            <label for="newName">새로운 이름:</label>
+            <input type="text" id="newName" name="newName">
+        </div>
+        <div class="form-group">
+            <label for="newEmail">새로운 이메일:</label>
+            <input type="text" id="newEmail" name="newEmail">
+        </div>
         <button type="button" onclick="updateUser()">수정</button>
     </form>
-
+    <br>
     <!-- 사용자 정보 삭제 폼 -->
     <h2>사용자 정보 삭제</h2>
     <form id="deleteForm">
@@ -72,9 +81,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // JavaScript 함수들을 구현해야 합니다. 서버 백엔드와 통합해야 합니다.
     function searchUser() {
-        // 조회 기능 구현
+        let userId = $("#searchId").val();
+        $.ajax({
+          type : "get",
+          url : "/member/selMember.do",
+          dataType : "json",
+          data : { userId: userId },
+          success: function (data) {
+                let html = '';
+              if (data) {
+                  html += '<span>' + data + '</span>';
+              } else {
+                  html += '조회할 사용자가 없습니다.'
+              }
+              $("#userDetails").html(html);
+          },
+          error: function (request) {
+              alert("사용자 조회 실패!");
+          }
+        });
     }
 
     function addUser() {
