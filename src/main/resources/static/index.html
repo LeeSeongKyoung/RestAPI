@@ -1,119 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>사용자(Member) 정보 관리</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>멤버 관리</title>
 </head>
 <body>
-<div class="container">
-    <br>
-    <h1>사용자(Member) 정보 관리</h1>
-    <br><br>
-    <!-- 사용자 정보 조회 폼 -->
-    <h2>사용자 정보 조회</h2>
-    <form id="searchForm">
-        <label for="searchId">ID로 조회:</label>
-        <input type="text" id="searchId" name="searchId">
-        <button type="button" onclick="searchUser()">조회</button>
-    </form>
 
-    <div id="userDetails">
-        <!-- 조회된 사용자 정보가 여기에 표시됩니다. -->
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">멤버 관리</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/selMember.do">멤버 조회</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#add">멤버 등록</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#edit">멤버 수정</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#delete">멤버 삭제</a>
+            </li>
+        </ul>
     </div>
-    <br>
-    <!-- 사용자 정보 등록 폼 -->
-    <h2>사용자 정보 등록</h2>
-    <form id="addForm">
-        <div class="form-group">
-            <label for="name">이름:</label>
-            <input type="text" id="name" name="name">
-        </div>
-        <div class="form-group">
-            <label for="email">이메일:</label>
-            <input type="text" id="email" name="email">
-        </div>
-        <button type="button" onclick="addUser()">등록</button>
-    </form>
-    <br>
-    <!-- 사용자 정보 수정 폼 -->
-    <h2>사용자 정보 수정</h2>
-    <form id="updateForm">
-        <div class="form-group">
-            <label for="updateName">수정할 사용자 이름:</label>
-            <input type="text" id="updateName" name="updateName">
-        </div>
-        <div class="form-group">
-            <label for="newName">새로운 이름:</label>
-            <input type="text" id="newName" name="newName">
-        </div>
-        <div class="form-group">
-            <label for="newEmail">새로운 이메일:</label>
-            <input type="text" id="newEmail" name="newEmail">
-        </div>
-        <button type="button" onclick="updateUser()">수정</button>
-    </form>
-    <br>
-    <!-- 사용자 정보 삭제 폼 -->
-    <h2>사용자 정보 삭제</h2>
-    <form id="deleteForm">
-        <label for="deleteName">삭제할 사용자 이름:</label>
-        <input type="text" id="deleteName" name="deleteName">
-        <button type="button" onclick="deleteUser()">삭제</button>
-    </form>
-</div>
+</nav>
+
+<!-- 멤버 조회 -->
+<section id="view" class="container mt-4">
+    <!-- 조회 내용을 표시할 부분 -->
+    <div>
+        <span>selctMember</span>
+    </div>
+</section>
+
+<!-- 멤버 등록 -->
+<section id="add" class="container mt-4">
+    <!-- 등록 양식을 표시할 부분 -->
+</section>
+
+<!-- 멤버 수정 -->
+<section id="edit" class="container mt-4">
+    <!-- 수정 양식을 표시할 부분 -->
+</section>
+
+<!-- 멤버 삭제 -->
+<section id="delete" class="container mt-4">
+    <!-- 삭제 양식을 표시할 부분 -->
+</section>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    function searchUser() {
-        let userId = $("#searchId").val();
-        $.ajax({
-          type : "get",
-          url : "/member/selMember.do",
-          dataType : "json",
-          data : { userId: userId },
-          success: function (data) {
-                let html = '';
-              if (data) {
-                  html += '<span>' + data + '</span>';
-              } else {
-                  html += '조회할 사용자가 없습니다.'
-              }
-              $("#userDetails").html(html);
-          },
-          error: function (request) {
-              alert("사용자 조회 실패!");
-          }
-        });
-    }
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
-    function addUser() {
-        // 등록 기능 구현
-    }
-
-    function updateUser() {
-        // 수정 기능 구현
-    }
-
-    function deleteUser() {
-        // 삭제 기능 구현
-    }
-</script>
 </body>
 </html>
