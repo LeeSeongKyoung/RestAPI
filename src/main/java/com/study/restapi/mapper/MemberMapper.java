@@ -9,4 +9,11 @@ import java.util.Map;
 @Mapper
 public interface MemberMapper {
     List<Map<String, Object>> selMemberList();
+
+    /**
+     * 멤버 삭제
+     * @param paramMap
+     * @return
+     */
+    int delMember(Map<String, Object> paramMap);
 }

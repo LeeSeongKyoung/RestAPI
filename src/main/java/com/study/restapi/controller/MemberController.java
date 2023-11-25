@@ -1,6 +1,4 @@
 package com.study.restapi.controller;
-
-import ch.qos.logback.core.model.Model;
 import com.study.restapi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +59,8 @@ public class MemberController {
     @RequestMapping("/delMember.do")
     public Map<String, Object> delMember(@RequestParam Map<String, Object> paramMap){
         Map<String, Object> resultMap = new HashMap<>();
+        resultMap = memberService.delMember(paramMap);
+
         return resultMap;
     }
 

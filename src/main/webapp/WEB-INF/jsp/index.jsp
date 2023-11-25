@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,18 +21,18 @@
     <div class="row">
         <div class="col-md-8">
             <!-- 검색창 -->
-            <form class="form-inline">
-                <div class="form-group">
-                    <select class="form-control" id="searchType">
-                        <option value="name">이름</option>
-                        <option value="id">아이디</option>
-                    </select>
-                </div>
-                <div class="form-group mx-sm-3">
-                    <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력하세요">
-                </div>
-                <button type="submit" class="btn btn-primary">검색</button>
-            </form>
+<%--            <form class="form-inline">--%>
+<%--                <div class="form-group">--%>
+<%--                    <select class="form-control" id="searchType">--%>
+<%--                        <option value="name">이름</option>--%>
+<%--                        <option value="id">아이디</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="form-group mx-sm-3">--%>
+<%--                    <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력하세요">--%>
+<%--                </div>--%>
+<%--                <button type="submit" class="btn btn-primary">검색</button>--%>
+<%--            </form>--%>
         </div>
 
         <div class="col-md-4 text-right">
@@ -54,46 +55,30 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>hong12</td>
-            <td>홍길동</td>
-            <td>12</td>
-            <td>
-                <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    수정
-                </button>
-                <button type="button" class="btn btn-danger mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    삭제
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>hong12</td>
-            <td>홍길동</td>
-            <td>12</td>
-            <td>
-                <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    수정
-                </button>
-                <button type="button" class="btn btn-danger mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    삭제
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>hong12</td>
-            <td>홍길동</td>
-            <td>12</td>
-            <td>
-                <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    수정
-                </button>
-                <button type="button" class="btn btn-danger mb-4" data-toggle="modal" data-target="#addMemberModal">
-                    삭제
-                </button>
-            </td>
-            <!-- 필요한 다른 컬럼들 추가 -->
-        </tr>
+        <c:choose>
+            <c:when test="${not empty memberList}">
+                <c:forEach items="${memberList}" var="member">
+                    <tr>
+                        <td>${member.id}</td>
+                        <td>${member.name}</td>
+                        <td>${member.age}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target="#addMemberModal">
+                                수정
+                            </button>
+                            <button type="button" class="btn btn-danger mb-4" data-id="${member.id}" id="delBtn">
+                                삭제
+                            </button>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td colspan="3">조회된 멤버가 없습니다.</td>
+                </tr>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
 </div>
@@ -133,11 +118,34 @@
     </div>
 </div>
 
-
-<!-- 부트스트랩 및 jQuery CDN 추가 -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
 
+    // 멤버 삭제
+    $("#delBtn").on("click", function () {
+        let id = $(this).data("id");
+        $.ajax({
+            type: "post",
+            url: "/delMember.do",  // 변경된 URL
+            data: { id: id },     // 변경된 데이터 전송 방식
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    confirm("삭제 성공", function (res) {
+                        if (res) {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (request) {
+                alert("삭제 실패!");
+            }
+        });
+    });
+
+</script>
 </body>
 </html>
