@@ -30,7 +30,6 @@ public class MemberController {
         return mav;
     }
 
-
     /**
      * 멤버 등록
      * @return
@@ -38,6 +37,19 @@ public class MemberController {
     @PostMapping("/rgstMember.do")
     public Map<String, Object> rgstMember(@RequestParam Map<String, Object> paramMap){
         Map<String, Object> resultMap = new HashMap<>();
+        resultMap = memberService.rgstMember(paramMap);
+        return resultMap;
+    }
+
+    /**
+     * 멤버 정보 조회
+     * @param paramMap
+     * @return
+     */
+    @GetMapping("selMemberById.do")
+    public Map<String, Object> selMemberById(@RequestParam Map<String, Object> paramMap){
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap = memberService.selMemberById(paramMap);
         return resultMap;
     }
 
@@ -48,6 +60,7 @@ public class MemberController {
     @RequestMapping("/updtMember.do")
     public Map<String,Object> updtMember(@RequestParam Map<String,Object> paramMap){
         Map<String, Object> resultMap = new HashMap<>();
+        resultMap = memberService.updtMember(paramMap);
         return resultMap;
     }
 

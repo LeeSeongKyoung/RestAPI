@@ -37,7 +37,7 @@
 
         <div class="col-md-4 text-right">
             <!-- 멤버 등록 버튼 -->
-            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addMemberModal">
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addMemberModal" data-dismiss="modal">
                 멤버 등록
             </button>
         </div>
@@ -51,7 +51,6 @@
             <th>이름</th>
             <th>나이</th>
             <th>관리</th>
-            <!-- 필요한 다른 컬럼들 추가 -->
         </tr>
         </thead>
         <tbody>
@@ -63,10 +62,10 @@
                         <td>${member.name}</td>
                         <td>${member.age}</td>
                         <td>
-                            <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target="#addMemberModal">
+                            <button type="button" class="btn btn-warning mb-4 updtBtn" data-id="${member.id}" data-dismiss="modal">
                                 수정
                             </button>
-                            <button type="button" class="btn btn-danger mb-4" data-id="${member.id}" id="delBtn">
+                            <button type="button" class="btn btn-danger mb-4 delBtn" data-id="${member.id}">
                                 삭제
                             </button>
                         </td>
@@ -87,31 +86,58 @@
 <div class="modal" id="addMemberModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- 모달 내용 -->
             <div class="modal-header">
                 <h4 class="modal-title">멤버 등록</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- 등록 폼 -->
                 <form id="addMemberForm">
                     <div class="form-group">
-                        <label for="memberId">아이디:</label>
-                        <input type="text" class="form-control" id="memberId" name="memberId" required>
+                        <label for="id">아이디:</label>
+                        <input type="text" class="form-control" id="id" name="id" required>
                     </div>
                     <div class="form-group">
-                        <label for="memberPassword">비밀번호:</label>
-                        <input type="password" class="form-control" id="memberPassword" name="memberPassword" required>
+                        <label for="passwd">비밀번호:</label>
+                        <input type="password" class="form-control" id="passwd" name="passwd" required>
                     </div>
                     <div class="form-group">
-                        <label for="memberName">이름:</label>
-                        <input type="text" class="form-control" id="memberName" name="memberName" required>
+                        <label for="name">이름:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="memberAge">나이:</label>
-                        <input type="number" class="form-control" id="memberAge" name="memberAge" required>
+                        <label for="age">나이:</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">등록</button>
+                    <button type="button" class="btn btn-primary" id="memRgstBtn">등록</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 멤버 수정 모달 -->
+<div class="modal" id="updtMemberModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">멤버 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="updtMemberForm">
+                    <div class="form-group">
+                        <label for="id">아이디:</label>
+                        <input type="text" class="form-control" id="updt_id" name="id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">이름:</label>
+                        <input type="text" class="form-control" id="updt_name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">나이:</label>
+                        <input type="number" class="form-control" id="updt_age" name="age" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="updtMemBtn">수정</button>
                 </form>
             </div>
         </div>
@@ -121,15 +147,95 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <script>
 
+    $(document).ready(function(){
+        $("#updtMemberModal").hide();
+    });
+
+    // 멤버 등록
+    $("#memRgstBtn").on("click", function () {
+        $.ajax({
+            type: "post",
+            url: "/rgstMember.do",
+            data: $("#addMemberForm").serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    confirm("등록 성공", function (res) {
+                        if (res) {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (request) {
+                alert("등록 실패!");
+            }
+        });
+    });
+
+
+    // 수정 - 멤버 정보 조회
+    $(".updtBtn").on("click", function () {
+        let id = $(this).data("id");
+        $.ajax({
+            type: "get",
+            url: "/selMemberById.do",
+            data: { id: id },
+            dataType: "json",
+            success: function (data) {
+                $("#updt_id").val(data.id);
+                $("#updt_name").val(data.name);
+                $("#updt_age").val(data.age);
+
+                $("#updtMemberModal").show();
+
+            },
+            error: function (request) {
+                alert("삭제 실패!");
+            }
+        });
+    });
+
+    // 멤버 수정
+    $("#updtMemBtn").on("click", function () {
+        $.ajax({
+            type: "patch",
+            url: "/updtMember.do",
+            data: {
+                id : $("#updt_id").val(),
+                name: $("#updt_name").val(),
+                age: $("#updt_age").val()
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    confirm("수정 성공", function (res) {
+                        if (res) {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (request) {
+                alert("수정 실패!");
+            }
+        });
+    });
+
+
+
+
     // 멤버 삭제
-    $("#delBtn").on("click", function () {
+    $(".delBtn").on("click", function () {
         let id = $(this).data("id");
         $.ajax({
             type: "post",
-            url: "/delMember.do",  // 변경된 URL
-            data: { id: id },     // 변경된 데이터 전송 방식
+            url: "/delMember.do",
+            data: { id: id },
             dataType: "json",
             success: function (data) {
                 if (data.result) {
