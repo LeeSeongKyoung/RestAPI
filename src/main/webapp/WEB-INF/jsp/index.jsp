@@ -12,10 +12,29 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             <h2 class="mb-4">멤버 리스트</h2>
         </div>
-        <div class="col-4 text-right">
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- 검색창 -->
+            <form class="form-inline">
+                <div class="form-group">
+                    <select class="form-control" id="searchType">
+                        <option value="name">이름</option>
+                        <option value="id">아이디</option>
+                    </select>
+                </div>
+                <div class="form-group mx-sm-3">
+                    <input type="text" class="form-control" id="searchInput" placeholder="검색어를 입력하세요">
+                </div>
+                <button type="submit" class="btn btn-primary">검색</button>
+            </form>
+        </div>
+
+        <div class="col-md-4 text-right">
             <!-- 멤버 등록 버튼 -->
             <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addMemberModal">
                 멤버 등록
@@ -84,10 +103,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- 모달 내용 -->
-            <!-- 필요한 폼 요소들을 추가 -->
+            <div class="modal-header">
+                <h4 class="modal-title">멤버 등록</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 등록 폼 -->
+                <form id="addMemberForm">
+                    <div class="form-group">
+                        <label for="memberId">아이디:</label>
+                        <input type="text" class="form-control" id="memberId" name="memberId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberPassword">비밀번호:</label>
+                        <input type="password" class="form-control" id="memberPassword" name="memberPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberName">이름:</label>
+                        <input type="text" class="form-control" id="memberName" name="memberName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberAge">나이:</label>
+                        <input type="number" class="form-control" id="memberAge" name="memberAge" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 
 <!-- 부트스트랩 및 jQuery CDN 추가 -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

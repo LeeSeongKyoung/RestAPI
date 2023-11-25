@@ -1,12 +1,15 @@
 package com.study.restapi.controller;
 
-import com.study.restapi.Service.MemberService;
+import ch.qos.logback.core.model.Model;
+import com.study.restapi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -15,13 +18,19 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
 
+    /**
+     * 메인 화면
+     * @param model
+     * @return
+     */
     @GetMapping("/")
-    public ModelAndView main() {
-
+    public ModelAndView main(ModelMap model) {
         ModelAndView mav = new ModelAndView("index");
+        List<Map<String,Object>> list = memberService.selMemberList();
+        model.addAttribute("memberList", list);
+
         return mav;
     }
-
 
 
     /**
