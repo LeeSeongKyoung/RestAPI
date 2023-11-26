@@ -229,7 +229,7 @@
     $(".delBtn").on("click", function () {
         let id = $(this).data("id");
         $.ajax({
-            type: "post",
+            type: "delete",
             url: "/delMember.do",
             data: { id: id },
             dataType: "json",
