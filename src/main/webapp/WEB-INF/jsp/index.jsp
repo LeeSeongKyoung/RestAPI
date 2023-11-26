@@ -5,8 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>멤버 리스트</title>
-    <!-- 부트스트랩 CDN 추가 -->
+    <title>멤버 관리</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -14,7 +13,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
-            <h2 class="mb-4">멤버 리스트</h2>
+            <h2 class="mb-4">멤버 관리</h2>
         </div>
     </div>
 
@@ -225,9 +224,6 @@
             }
         });
     });
-
-
-
 
     // 멤버 삭제
     $(".delBtn").on("click", function () {
